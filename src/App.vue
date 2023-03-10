@@ -1,10 +1,14 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useCarStore } from "@/stores/car.js";
+import { useLoaderStore } from "@/stores/loader.js";
+import LoaderModal from "@/components/common/loader/LoaderModal.vue"
+import LoaderCircle from "@/components/common/loader/LoaderCircle.vue"
 
 const { filterValue, sorting, currentPage, getTotalPage, getDisplayedCars } =
   storeToRefs(useCarStore());
+const { loadingCircleModal, loadingCircle } = storeToRefs(useLoaderStore());
 
 const carFilter = [
   {
@@ -28,15 +32,47 @@ const carFilter = [
     image: "car-people-carries.png",
   },
 ];
+
+const changeCarFilter = (type) => {
+  filterValue.value = type;
+  currentPage.value = 1;
+  fakeLoading();
+}
+
+const fakeLoading = () => {
+  loadingCircle.value = true;
+  setTimeout(() => {
+    loadingCircle.value = false;
+  }, 1000)
+}
+
+watch(
+  () => currentPage.value,
+  (currentPage) => {
+    fakeLoading();
+  }
+)
+
+onMounted(() => {
+  loadingCircleModal.value = true;
+  setTimeout(() => {
+    loadingCircleModal.value = false;
+  }, 1000)
+})
 </script>
 <template>
-  <div class="container-fluid text-center">
-    <div class="car-filter d-flex justify-content-xl-between overflow-x-hide">
+  <LoaderModal></LoaderModal>
+  <div
+    v-if="!loadingCircleModal"
+    class="container-fluid text-center"
+  >
+    <div class="car-filter row overflow-x-hide">
       <div
         v-for="(car, index) in carFilter"
         :key="index"
-        class="card p-0 mr-5 mr-0"
-        @click="(filterValue = car.type), (currentPage = 1)"
+        class="card col p-0 mx-3"
+        :style="[car.type == filterValue ? 'border: 2px solid white': '']"
+        @click="changeCarFilter(car.type)"
       >
         <img
           :src="`src/assets/images/${car.image}`"
@@ -54,8 +90,26 @@ const carFilter = [
       </div>
     </div>
     <div class="car-list row">
-      <div class="col-md-4 mb-4" v-for="car in getDisplayedCars" :key="car">
-        <div class="card" style="height: 430px; background-color: #3b3e44">
+      <LoaderCircle
+        class="col"
+        v-if="loadingCircle"
+      />
+      <div
+        v-else
+        class="col-md-4 mb-4"
+        v-for="car in getDisplayedCars"
+        :key="car"
+      >
+        <div
+          class="card overflow-hidden"
+          style="height: 326px; background-color: #3b3e44"
+        >
+          <div
+            v-if="car.isHot"
+            class="triangle d-flex align-items-end justify-content-center"
+          >
+            <p>HOT</p>
+          </div>
           <img
             src="src/assets/images/car-large.png"
             class="card-img-top"
@@ -66,9 +120,7 @@ const carFilter = [
             style="background-color: #222529; height: 50%"
           >
             <div>
-              <div
-                class="d-flex justify-content-between align-items-center mb-2"
-              >
+              <div class="d-flex justify-content-between align-items-center mb-2">
                 <p class="h3 mb-0 text-white">{{ car.name }}</p>
                 <div class="btn-green px-3">SPECIAL DEAL</div>
               </div>
@@ -94,7 +146,11 @@ const carFilter = [
               Previous
             </div>
           </li>
-          <li class="page-item" v-for="page in getTotalPage" :key="page">
+          <li
+            class="page-item"
+            v-for="page in getTotalPage"
+            :key="page"
+          >
             <div
               class="page-link"
               :style="page == currentPage ? 'color: #E8AE1B' : ''"
@@ -120,9 +176,9 @@ const carFilter = [
 
 <style lang="scss" scoped>
 .car-filter {
-  margin-bottom: 8rem;
+  margin-bottom: 6rem;
   .card {
-    min-width: 235px;
+    min-width: 115px;
     height: 160px;
     background-color: #3b3e44;
     border: 0px;
@@ -138,7 +194,9 @@ const carFilter = [
       border-bottom-right-radius: 5px;
     }
     .card-text {
-      font-size: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 16.41px;
     }
   }
   .card:hover {
@@ -146,10 +204,57 @@ const carFilter = [
   }
 }
 .car-list {
+  .card {
+    position: relative;
+  }
+  .triangle {
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 120px;
+    height: 120px;
+    transform: rotate(45deg);
+    background: #d12020;
+    p {
+      transform: rotate(-45deg);
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 36px;
+      margin-bottom: 6px;
+    }
+  }
+  // .card:after {
+  //   content: "";
+  //   width: 0;
+  //   height: 0;
+  //   border-style: solid;
+  //   border-radius: 10px;
+  //   border-width: 0 85px 85px 0;
+  //   border-color: transparent #d12020 transparent transparent;
+  //   right: 0;
+  //   top: 0;
+  //   position: absolute;
+  // }
   .card-img-top {
-    height: 220px;
+    height: 167px;
     object-fit: contain;
     padding: 10px;
+  }
+  .h3 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 23.44px;
+  }
+  .h4 {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 19.92px;
+  }
+  .h2 {
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 29.3px;
   }
   .btn-green {
     display: flex;
@@ -159,8 +264,9 @@ const carFilter = [
     background-color: #22332e;
     color: #219653;
     border-radius: 20px;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 15.23px;
   }
   .btn-primary {
     display: flex;
@@ -170,9 +276,10 @@ const carFilter = [
     width: 192px;
     background-color: #386bf1;
     color: #e7ecf3;
-    font-size: 24px;
-    font-weight: 400;
-    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20.83px;
+    border-radius: 8px;
   }
 }
 .pagination {
@@ -195,7 +302,15 @@ const carFilter = [
 
 @media (max-width: 1024px) {
   .car-filter {
-    margin-bottom: 10px;
+    margin-bottom: 54px;
+  }
+}
+@media (max-width: 768px) {
+  .car-filter {
+    flex-wrap: nowrap;
+    .card {
+      min-width: 180px;
+    }
   }
 }
 </style>

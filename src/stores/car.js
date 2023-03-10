@@ -15,7 +15,7 @@ export const useCarStore = defineStore('car', {
     },
     getDisplayedCars: (state) => {
       const filterData = state.carList.filter(item => item.type === state.filterValue);
-      console.log(filterData);
+      filterData.sort((a, b) => b.isHot - a.isHot);
       const startIndex = (state.currentPage - 1) * state.carsPerPage;
       const endIndex = startIndex + state.carsPerPage;
       return filterData.slice(startIndex, endIndex);

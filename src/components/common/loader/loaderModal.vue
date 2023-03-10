@@ -7,7 +7,7 @@ import LoaderCircle from "./LoaderCircle.vue";
 const { loadingCircleModal } = storeToRefs(useLoaderStore());
 </script>
 <template>
-  <Modal :show="loadingCircleModal > 0">
+  <Modal v-if="loadingCircleModal">
     <LoaderCircle />
   </Modal>
 </template>

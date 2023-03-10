@@ -3,6 +3,7 @@
 #app {
     margin: 0 auto;
     width: 100%;
+    min-height: 100vh;
     padding: 2rem 1rem;
     font-weight: normal;
     background-color: #141416;
@@ -22,14 +23,15 @@ a,
     }
 }
 
-@media (min-width: 1024px) {
-    body {
-        display: flex;
-        place-items: center;
-    }
 
+@media (min-width: 992px) {
     #app {
-        display: grid;
-        padding: 12rem 15rem;
+        padding: 3rem 5rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    #app {
+        padding: 12.25rem 11.688rem;
     }
 }
