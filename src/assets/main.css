@@ -2,9 +2,11 @@
 
 #app {
     margin: 0 auto;
-    padding: 12rem 13rem;
+    width: 100%;
+    padding: 2rem 1rem;
     font-weight: normal;
     background-color: #141416;
+    overflow-x: hidden;
 }
 
 a,
@@ -28,5 +30,6 @@ a,
 
     #app {
         display: grid;
+        padding: 12rem 15rem;
     }
 }
