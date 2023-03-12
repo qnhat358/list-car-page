@@ -79,7 +79,7 @@ const pagesToShow = computed(() => {
         >
           <div
             class="page-link"
-            :style="page == currentPageValue ? 'color: #E8AE1B' : ''"
+            :style="page == currentPageValue ? 'color: var(--orange-1)' : ''"
             @click="currentPageValue = page"
           >
             {{ page }}
@@ -107,23 +107,32 @@ const pagesToShow = computed(() => {
 
 <style lang="scss" scoped>
 .pagination {
-  font-size: 2rem;
+  font-size: 22px;
   padding: 1.5rem;
   .page-item {
-    margin-right: 2rem;
+    margin-right: 43px;
     .page-link:hover {
-      background-color: #374151;
+      background-color: var(--gray-2);
       border-radius: 0;
     }
     .page-link {
-      background-color: #141416;
-      border: 0px;
+      background-color: var(--gray-1);
+      border: 0;
       color: white;
       cursor: pointer;
     }
     .disabled {
       cursor: context-menu;
       pointer-events: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    font-size: 12px;
+    .page-item {
+      margin-right: 30px;
     }
   }
 }

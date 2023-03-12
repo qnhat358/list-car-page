@@ -104,25 +104,32 @@ onMounted(() => {
     v-if="!isLoading"
     class="container-fluid text-center"
   >
-    <div class="car-filter d-flex justify-content-between mb-5">
-      <Dropdown
-        v-for="(value, key) in carFilter"
-        :key="key + uniqueKey"
-        :title="value.title"
-        :icon="value.icon"
-        v-model="value.selected"
-        :options="value.options"
-      />
-      <button
-        type="button"
-        class="btn h-50 align-self-end font-weight-bold"
-        @click="searchHandle"
-      >SEARCH CAR NOW</button>
-      <button
-        type="button"
-        class="btn h-50 align-self-end font-weight-bold"
-        @click="resetHandle"
-      >RESET</button>
+    <div class="car-filter row mb-5">
+      <div class="col-md-9 col-12 d-flex flex-column flex-md-row justify-content-lg-between mb-2 mb-lg-0">
+        <Dropdown
+          v-for="(value, key) in carFilter"
+          :key="key + uniqueKey"
+          :title="value.title"
+          :icon="value.icon"
+          v-model="value.selected"
+          :options="value.options"
+          :width="'15vw'"
+          class="mr-2 mr-lg-0"
+        />
+      </div>
+      <div class="col-md-3 col-12 d-flex justify-content-lg-end">
+        <button
+          type="button"
+          class="btn align-self-end font-weight-bold mr-3"
+          @click="searchHandle"
+        >SEARCH</button>
+        <button
+          type="button"
+          class="btn align-self-end font-weight-bold"
+          @click="resetHandle"
+        >RESET</button>
+
+      </div>
     </div>
     <div class="car-type row overflow-x-hide">
       <SimpleCard
@@ -137,7 +144,7 @@ onMounted(() => {
     </div>
     <div class="car-list row">
       <div
-        class="col-md-4 mb-4"
+        class="col-xl-4 col-md-6 mb-4"
         v-for="car in getDisplayedCars"
         :key="car"
       >
@@ -161,27 +168,31 @@ onMounted(() => {
 <style lang="scss" scoped>
 .car-filter {
   .btn {
-    background-color: #e8ae1b;
+    background-color: var(--orange-1);
     color: white;
+    height: 50%;
   }
   .btn:hover {
-    background-color: #333333;
+    background-color: var(--gray-3);
   }
 }
 .car-type {
   margin-bottom: 6rem;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .car-type {
     margin-bottom: 54px;
   }
 }
+
 @media (max-width: 768px) {
   .car-type {
     flex-wrap: nowrap;
-    .card {
-      min-width: 180px;
+  }
+  .car-filter {
+    .btn {
+      height: 100%;
     }
   }
 }

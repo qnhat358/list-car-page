@@ -6,7 +6,7 @@
     min-height: 100vh;
     padding: 2rem 1rem;
     font-weight: normal;
-    background-color: #141416;
+    background-color: var(--gray-1);
     overflow-x: hidden;
 }
 

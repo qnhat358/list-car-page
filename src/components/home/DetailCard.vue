@@ -36,16 +36,19 @@ const props = defineProps({
       class="card-img-top"
       alt="..."
     />
-    <div class="card-body text-light d-flex flex-column justify-content-between">
+    <div class="card-body d-flex flex-column justify-content-between">
       <div>
         <div class="d-flex justify-content-between align-items-center mb-2">
-          <p class="h3 mb-0 text-white">{{ name }}</p>
+          <p class="h3 mb-0">{{ name }}</p>
           <div class="btn-green px-3">SPECIAL DEAL</div>
         </div>
-        <p class="text-left h4 text-secondary">{{ detail }}</p>
+        <p class="text-left h4">{{ detail }}</p>
       </div>
       <div class="d-flex justify-content-between align-items-center">
-        <p class="h2 text-white-50 mb-0">${{ price }}</p>
+        <div class="div">
+          <p class="h2 mb-0">${{ price }}</p>
+          <p class="h5 mb-0 text-left">per day</p>
+        </div>
         <div class="btn btn-primary">Reserve deal</div>
       </div>
     </div>
@@ -56,7 +59,7 @@ const props = defineProps({
 .card {
   position: relative;
   height: 326px;
-  background-color: #3b3e44;
+  background-color: var(--gray-3);
 }
 .triangle {
   position: absolute;
@@ -65,7 +68,7 @@ const props = defineProps({
   width: 120px;
   height: 120px;
   transform: rotate(45deg);
-  background: #d12020;
+  background: var(--red-1);
   p {
     transform: rotate(-45deg);
     color: white;
@@ -81,30 +84,41 @@ const props = defineProps({
   padding: 10px;
 }
 .card-body {
-  background-color: #222529;
+  background-color: var(--gray-2);
   height: 50%;
   .h3 {
     font-size: 20px;
     font-weight: 700;
     line-height: 23.44px;
+    color: var(--color-text-1);
   }
   .h4 {
     font-size: 17px;
     font-weight: 500;
     line-height: 19.92px;
+    color: var(--color-text-3);
   }
   .h2 {
     font-size: 25px;
     font-weight: 500;
     line-height: 29.3px;
+    color: var(--color-text-2);
   }
+  .h5 {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 19.92px;
+    color: var(--color-text-3);
+    display: none;
+  }
+
   .btn-green {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 30px;
-    background-color: rgba(39, 174, 96, 0.1);
-    color: #219653;
+    background-color: var(--green-1);
+    color: var(--color-text-4);
     border-radius: 20px;
     font-size: 13px;
     font-weight: 500;
@@ -115,14 +129,22 @@ const props = defineProps({
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50px;
-    width: 192px;
-    background-color: #3b71fe;
-    color: #e7ecf3;
+    // height: 38.34px;
+    // width: 146px;
+    white-space: nowrap;
+    padding: 10.2px 23.5px;
+    background-color: var(--blue-1);
+    color: var(--color-text-1);
     font-size: 16px;
     font-weight: 700;
     line-height: 20.83px;
     border-radius: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .h5 {
+    display: block !important;
   }
 }
 </style>

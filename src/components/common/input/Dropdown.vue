@@ -17,7 +17,11 @@ const props = defineProps({
   width: {
     type: String,
     default: '250px'
-  }
+  },
+  minWidth: {
+    type: String,
+    default: ''
+  },
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -56,6 +60,6 @@ watch(
 
 <style lang="scss" scoped>
 .custom-select {
-  width: v-bind(width);
+  min-width: v-bind(width);
 }
 </style>

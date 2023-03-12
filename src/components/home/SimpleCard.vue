@@ -19,7 +19,7 @@ const props = defineProps({
       alt="..."
     />
     <div class="card-body d-flex align-items-center justify-content-center text-center">
-      <p class="card-text text-light">
+      <p class="card-text">
         {{ title }}
       </p>
     </div>
@@ -30,7 +30,7 @@ const props = defineProps({
 .card {
   min-width: 115px;
   height: 160px;
-  background-color: #3b3e44;
+  background-color: var(--gray-3);
   border: 0px;
   border-radius: 5px;
   cursor: pointer;
@@ -42,10 +42,11 @@ const props = defineProps({
   .card-body {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    background-color: #222529;
+    background-color: var(--gray-2);
     height: 30%;
   }
   .card-text {
+    color: var(--color-text-1);
     font-size: 14px;
     font-weight: 500;
     line-height: 16.41px;
@@ -53,5 +54,11 @@ const props = defineProps({
 }
 .card:hover {
   filter: brightness(0.9);
+}
+
+@media (max-width: 768px) {
+  .card {
+    min-width: 180px;
+  }
 }
 </style>
