@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { carList } from '../storage/data/carList'
 import { useLoaderStore } from "@/stores/loader.js";
-
+import { CARS_PER_PAGE } from '../constants';
 
 export const useCarStore = defineStore('car', {
   state: () => ({
@@ -13,7 +13,7 @@ export const useCarStore = defineStore('car', {
     },
     sortValue: 'Most viewed',
     currentPage: 1,
-    carsPerPage: 6
+    carsPerPage: CARS_PER_PAGE,
   }),
   getters: {
     getFilteredCars: (state) => {
@@ -32,11 +32,13 @@ export const useCarStore = defineStore('car', {
       return Math.ceil(state.getFilteredCars.length / state.carsPerPage);
     },
     getDisplayedCars: (state) => {
+      // Fake loading data
       const { loadingCircleModal } = storeToRefs(useLoaderStore());
       loadingCircleModal.value = true;
       setTimeout(() => {
         loadingCircleModal.value = false;
       }, 1000)
+
       //Sorting
       switch (state.sortValue) {
         case 'Most viewed':

@@ -60,85 +60,77 @@ const props = defineProps({
   position: relative;
   height: 326px;
   background-color: var(--gray-3);
-}
-.triangle {
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 120px;
-  height: 120px;
-  transform: rotate(45deg);
-  background: var(--red-1);
-  p {
-    transform: rotate(-45deg);
-    color: white;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 36px;
-    margin-bottom: 6px;
+  .triangle {
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 120px;
+    height: 120px;
+    transform: rotate(45deg);
+    background: var(--red-1);
+    p {
+      transform: rotate(-45deg);
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 36px;
+      margin-bottom: 6px;
+    }
   }
-}
-.card-img-top {
-  height: 167px;
-  object-fit: contain;
-  padding: 10px;
-}
-.card-body {
-  background-color: var(--gray-2);
-  height: 50%;
-  .h3 {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 23.44px;
-    color: var(--color-text-1);
+  &-img-top {
+    height: 167px;
+    object-fit: contain;
+    padding: 10px;
   }
-  .h4 {
-    font-size: 17px;
-    font-weight: 500;
-    line-height: 19.92px;
-    color: var(--color-text-3);
-  }
-  .h2 {
-    font-size: 25px;
-    font-weight: 500;
-    line-height: 29.3px;
-    color: var(--color-text-2);
-  }
-  .h5 {
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 19.92px;
-    color: var(--color-text-3);
-    display: none;
-  }
+  &-body {
+    background-color: var(--gray-2);
+    height: 50%;
+    @mixin heading($font-size, $font-weight, $line-height, $color) {
+      font-size: $font-size;
+      font-weight: $font-weight;
+      line-height: $line-height;
+      color: $color;
+    }
+    .h3 {
+      @include heading(20px, 700, 23.44px, var(--color-text-1));
+    }
+    .h4 {
+      @include heading(17px, 500, 19.92px, var(--color-text-3));
+    }
+    .h2 {
+      @include heading(25px, 500, 29.3px, var(--color-text-2));
+    }
+    .h5 {
+      @include heading(17px, 400, 19.92px, var(--color-text-3));
+      display: none;
+    }
 
-  .btn-green {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    background-color: var(--green-1);
-    color: var(--color-text-4);
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 15.23px;
-    cursor: pointer;
-  }
-  .btn-primary {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // height: 38.34px;
-    // width: 146px;
-    white-space: nowrap;
-    padding: 10.2px 23.5px;
-    background-color: var(--blue-1);
-    color: var(--color-text-1);
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 20.83px;
-    border-radius: 8px;
+    .btn-green {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30px;
+      background-color: var(--green-1);
+      color: var(--color-text-4);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 15.23px;
+      cursor: pointer;
+    }
+    .btn-primary {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      white-space: nowrap;
+      padding: 10.2px 23.5px;
+      background-color: var(--blue-1);
+      color: var(--color-text-1);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20.83px;
+      border-radius: 8px;
+    }
   }
 }
 
