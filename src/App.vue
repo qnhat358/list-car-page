@@ -61,9 +61,9 @@ const carType = [
   },
 ];
 
-// This will help update Dropdown component
+// This will help re-render DOM
 const uniqueKey = ref(0);
-const updateDropdowns = () => {
+const updateDOM = () => {
   uniqueKey.value = Math.random();
 };
 
@@ -71,6 +71,8 @@ const searchHandle = () => {
   filterValue.value.brand = carFilter.value.brand.selected;
   filterValue.value.year = carFilter.value.year.selected;
   sortValue.value = carFilter.value.sort.selected;
+  currentPage.value = 1;
+  updateDOM();
 }
 
 const resetHandle = () => {
@@ -95,7 +97,7 @@ onMounted(() => {
   setTimeout(() => {
     isLoading.value = false;
   }, 1000);
-  watch(carFilter, updateDropdowns, { deep: true });
+  watch(carFilter, updateDOM, { deep: true });
 })
 </script>
 <template>
@@ -105,13 +107,13 @@ onMounted(() => {
     class="container-fluid text-center"
   >
     <div class="car-filter row mb-5">
-      <div class="col-md-9 col-12 d-flex flex-column flex-md-row justify-content-lg-between mb-2 mb-lg-0">
+      <div class="col-md-9 col-12 d-flex flex-column flex-md-row justify-content-lg-between mb-2 mb-md-0">
         <Dropdown
           v-for="(value, key) in carFilter"
           :key="key + uniqueKey"
+          v-model="value.selected"
           :title="value.title"
           :icon="value.icon"
-          v-model="value.selected"
           :options="value.options"
           :width="'15vw'"
           class="mr-2 mr-lg-0"
@@ -144,6 +146,10 @@ onMounted(() => {
     </div>
     <div class="car-list row">
       <div
+        v-if="getDisplayedCars.length == 0"
+        class="h5 col-12 text-white text-center"
+      >No cars found. Try expanding your search criteria or adjusting your filters.</div>
+      <div
         class="col-xl-4 col-md-6 mb-4"
         v-for="car in getDisplayedCars"
         :key="car"
@@ -158,7 +164,9 @@ onMounted(() => {
       </div>
     </div>
     <Pagination
+      v-if="getDisplayedCars.length > 0"
       v-model:currentPage="currentPage"
+      :key="uniqueKey"
       :totalPages="getTotalPages"
       :totalVisible="5"
     />

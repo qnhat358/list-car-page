@@ -18,10 +18,6 @@ const props = defineProps({
     type: String,
     default: '250px'
   },
-  minWidth: {
-    type: String,
-    default: ''
-  },
 });
 
 const emit = defineEmits(["update:modelValue"]);
